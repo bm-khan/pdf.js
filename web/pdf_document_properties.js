@@ -114,6 +114,7 @@ class PDFDocumentProperties {
     Promise.all([
       this.overlayManager.open(this.overlayName),
       this._dataAvailableCapability.promise,
+      document.getElementById("documentPropertiesClose").focus(),
     ]).then(() => {
       const currentPageNumber = this._currentPageNumber;
       const pagesRotation = this._pagesRotation;
