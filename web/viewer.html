@@ -79,7 +79,7 @@ See https://github.com/adobe-type-tools/cmap-resources
           </div>
         </div>
         <div id="sidebarContent">
-          <div id="thumbnailView">
+          <div id="thumbnailView" role="navigation" aria-label="page thumbnails">
           </div>
           <div id="outlineView" class="hidden">
           </div>
@@ -213,7 +213,7 @@ See https://github.com/adobe-type-tools/cmap-resources
                 <button id="viewFind" class="toolbarButton" title="Find in Document" tabindex="12" data-l10n-id="findbar">
                   <span data-l10n-id="findbar_label">Find</span>
                 </button>
-                <div class="splitToolbarButton hiddenSmallView">
+                <div class="splitToolbarButton hiddenSmallView" role="navigation" aria-label="page navigation">
                   <button class="toolbarButton pageUp" title="Previous Page" id="previous" tabindex="13" data-l10n-id="previous">
                     <span data-l10n-id="previous_label">Previous</span>
                   </button>
@@ -301,7 +301,7 @@ See https://github.com/adobe-type-tools/cmap-resources
         </menu>
 
         <div id="viewerContainer" tabindex="0">
-          <div id="viewer" class="pdfViewer"></div>
+          <div id="viewer" class="pdfViewer" role="main"></div>
         </div>
 
         <div id="errorWrapper" hidden='true'>
