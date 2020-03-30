@@ -27,7 +27,6 @@ const MATCHES_COUNT_LIMIT = 1000;
 class PDFFindBar {
   constructor(options, eventBus, l10n = NullL10n) {
     this.opened = false;
-
     this.bar = options.bar || null;
     this.toggleButton = options.toggleButton || null;
     this.findField = options.findField || null;
@@ -107,7 +106,6 @@ class PDFFindBar {
     let notFound = false;
     let findMsg = "";
     let status = "";
-
     switch (state) {
       case FindState.FOUND:
         break;

@@ -201,6 +201,7 @@ class PDFFindController {
     this._pdfDocument = null;
     this._pageMatches = [];
     this._pageMatchesLength = [];
+    this._pageResults = [];
     this._state = null;
     // Currently selected match.
     this._selected = {
@@ -352,7 +353,8 @@ class PDFFindController {
   _calculatePhraseMatch(query, pageIndex, pageContent, entireWord) {
     const matches = [];
     const queryLen = query.length;
-
+    const results = [];
+    let all_display = document.getElementsByClassName("find_all_display")[0];
     let matchIdx = -queryLen;
     while (true) {
       matchIdx = pageContent.indexOf(query, matchIdx + queryLen);
@@ -362,8 +364,11 @@ class PDFFindController {
       if (entireWord && !this._isEntireWord(pageContent, matchIdx, queryLen)) {
         continue;
       }
+      results.push(matchIdx);
       matches.push(matchIdx);
     }
+    all_display.innerText = results.toString();
+    this._pageResults[pageIndex] = results;
     this._pageMatches[pageIndex] = matches;
   }
 
@@ -660,7 +665,6 @@ class PDFFindController {
         this._updatePage(previousPage);
       }
     }
-
     this._updateUIState(state, this._state.findPrevious);
     if (this._selected.pageIdx !== -1) {
       // Ensure that the match will be scrolled into view.
