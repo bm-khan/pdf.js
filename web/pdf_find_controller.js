@@ -372,7 +372,7 @@ class PDFFindController {
       for(let i = 0; i < matches.length; i++){
         let elem = document.createElement("DIV");
         elem.classList.add("all_results_element");
-        elem.innerText = matches[i].toString();
+        elem.innerText = pageContent.substring(matches[i] - 10, matches[i] + 10);
         elem.onclick = () => {console.log(elem.innerText)};
         all_display.appendChild(elem);
       }
