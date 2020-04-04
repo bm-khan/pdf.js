@@ -355,6 +355,7 @@ class PDFFindController {
     const queryLen = query.length;
     const results = [];
     let all_display = document.getElementsByClassName("find_all_display")[0];
+    
     let matchIdx = -queryLen;
     while (true) {
       matchIdx = pageContent.indexOf(query, matchIdx + queryLen);
@@ -364,10 +365,18 @@ class PDFFindController {
       if (entireWord && !this._isEntireWord(pageContent, matchIdx, queryLen)) {
         continue;
       }
-      results.push(matchIdx);
       matches.push(matchIdx);
     }
-    all_display.innerText = results.toString();
+    if(matches.length > 0){
+      all_display.innerText = "";
+      for(let i = 0; i < matches.length; i++){
+        let elem = document.createElement("DIV");
+        elem.classList.add("all_results_element");
+        elem.innerText = matches[i].toString();
+        elem.onclick = () => {console.log(elem.innerText)};
+        all_display.appendChild(elem);
+      }
+    }
     this._pageResults[pageIndex] = results;
     this._pageMatches[pageIndex] = matches;
   }

@@ -331,9 +331,9 @@ html[dir='rtl'] #toolbarContainer, .findbar, .secondaryToolbar {
 .findbar {
   min-width: 300px;
 }
-.findbar > div {
+/* .findbar > div {
   height: 32px;
-}
+} */
 .findbar.wrapContainers > div {
   clear: both;
 }
@@ -345,6 +345,13 @@ html[dir='ltr'] .findbar {
 }
 html[dir='rtl'] .findbar {
   right: 68px;
+}
+
+.find_all_display {
+  display: flex;
+  flex-direction: column;
+  max-height: 100px;
+  overflow: auto;
 }
 
 .findbar label {
