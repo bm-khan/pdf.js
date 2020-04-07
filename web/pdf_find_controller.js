@@ -27,7 +27,8 @@ const FindState = {
 const FIND_TIMEOUT = 250; // ms
 const MATCH_SCROLL_OFFSET_TOP = -50; // px
 const MATCH_SCROLL_OFFSET_LEFT = -400; // px
-const MATCHES = [];
+
+let MATCHES = [];
 
 const CHARACTERS_TO_NORMALIZE = {
   "\u2018": "'", // Left single quotation mark
@@ -553,6 +554,7 @@ class PDFFindController {
 
     this._highlightMatches = true;
     let all_display = document.getElementsByClassName("find_all_display")[0];
+    MATCHES = [];
     if (this._dirtyMatch) {
       // Need to recalculate the matches, reset everything.
       this._dirtyMatch = false;
@@ -564,8 +566,6 @@ class PDFFindController {
       this._pageMatches.length = 0;
       this._pageMatchesLength.length = 0;
       this._matchesCountTotal = 0;
-      this.MATCHES = [];
-
       this._updateAllPages(); // Wipe out any previously highlighted matches.
 
       for (let i = 0; i < numPages; i++) {
@@ -577,13 +577,13 @@ class PDFFindController {
         this._extractTextPromises[i].then(pageIdx => {
           delete this._pendingFindMatches[pageIdx];
           this._calculateMatch(pageIdx);
+          if(i == numPages - 1){
+            for (let i = 0; i < MATCHES.length; i++) {
+              all_display.appendChild(MATCHES[i]);
+              console.log("appended");
+            }
+          }
         });
-      }
-      console.log(MATCHES);
-      console.log(MATCHES.length);
-      for (let i = 0; i < MATCHES.length; i++) {
-        all_display.appendChild(MATCHES[i]);
-        console.log("appended");
       }
     }
 
@@ -626,7 +626,6 @@ class PDFFindController {
     const offset = this._offset;
     const numMatches = matches.length;
     const previous = this._state.findPrevious;
-
     if (numMatches) {
       // There were matches for the page, so initialize `matchIdx`.
       offset.matchIdx = previous ? numMatches - 1 : 0;
