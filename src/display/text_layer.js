@@ -101,7 +101,7 @@ var renderTextLayer = (function renderTextLayerClosure() {
     textDiv.style.fontSize = `${fontHeight}px`;
     textDiv.style.fontFamily = style.fontFamily;
 
-    textDiv.textContent = geom.str;
+    textDiv.textContent = _processSpanEnding(geom.str);
     // `fontName` is only used by the FontInspector, and we only use `dataset`
     // here to make the font name available in the debugger.
     if (task._fontInspectorEnabled) {
@@ -154,6 +154,22 @@ var renderTextLayer = (function renderTextLayerClosure() {
         m,
       });
     }
+  }
+
+  function _processSpanEnding(str) {
+    var finalText = "";
+    if (str.slice(-1) === "-") {
+      if (str.slice(-2, -1).match(/\d/)) {
+        finalText = str;
+      } else if (str.slice(-2, -1).match(/\s/)) {
+        finalText = str + " ";
+      } else {
+        finalText = str.slice(0, -1);
+      }
+    } else {
+      finalText = str + " ";
+    }
+    return finalText;
   }
 
   function render(task) {
