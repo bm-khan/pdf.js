@@ -362,7 +362,8 @@ class PDFFindController {
       top: MATCH_SCROLL_OFFSET_TOP,
       left: MATCH_SCROLL_OFFSET_LEFT,
     };
-    let all_display = document.getElementsByClassName("find_all_display")[0];
+    console.log("calculatePhraseMatch");
+    //let all_display = document.getElementsByClassName("find_all_display")[0];
     
     let matchIdx = -queryLen;
     while (true) {
@@ -376,18 +377,20 @@ class PDFFindController {
       matches.push(matchIdx);
     }
     if(matches.length > 0){
-      all_display.innerText = "";
       for(let i = 0; i < matches.length; i++){
         let elem = document.createElement("DIV");
         elem.classList.add("all_results_element");
-        elem.innerHTML = "<div>" + pageContent.substring(matches[i] - 20, matches[i]) +
-                         "<div>" + pageContent.substring(matches[i], matches[i] + queryLen) + "</div>" +
-                         pageContent.substring(matches[i] + queryLen, matches[i] + queryLen + 20) + "</div>";
+        elem.innerText = pageContent.substring(matches[i] - 20, matches[i]);
+        let queryWordElement = document.createElement("b");
+        queryWordElement.textContent = pageContent.substring(matches[i], matches[i] + queryLen);
+        elem.appendChild(queryWordElement);
+        elem.appendChild(document.createTextNode(pageContent.substring(matches[i] + queryLen, matches[i] + queryLen + 20)));             
         /*elem.onclick = () => {
           console.log("Clicked")
           scrollIntoView(elem, spot, false)
         };*/
-        all_display.appendChild(elem);
+        MATCHES.push(elem);
+        //all_display.appendChild(elem);
       }
     }
     this._pageResults[pageIndex] = results;
@@ -549,7 +552,7 @@ class PDFFindController {
     const numPages = this._linkService.pagesCount;
 
     this._highlightMatches = true;
-
+    let all_display = document.getElementsByClassName("find_all_display")[0];
     if (this._dirtyMatch) {
       // Need to recalculate the matches, reset everything.
       this._dirtyMatch = false;
@@ -561,6 +564,7 @@ class PDFFindController {
       this._pageMatches.length = 0;
       this._pageMatchesLength.length = 0;
       this._matchesCountTotal = 0;
+      this.MATCHES = [];
 
       this._updateAllPages(); // Wipe out any previously highlighted matches.
 
@@ -574,6 +578,12 @@ class PDFFindController {
           delete this._pendingFindMatches[pageIdx];
           this._calculateMatch(pageIdx);
         });
+      }
+      console.log(MATCHES);
+      console.log(MATCHES.length);
+      for (let i = 0; i < MATCHES.length; i++) {
+        all_display.appendChild(MATCHES[i]);
+        console.log("appended");
       }
     }
 

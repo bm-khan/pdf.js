@@ -353,7 +353,15 @@ html[dir='rtl'] .findbar {
   max-height: 100px;
   overflow: auto;
 }
-
+.all_results_element {
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+}
+.all_results_element:hover {
+  background-color: rgba(0, 0, 0, 0.26);
+  cursor: pointer;
+}
 .findbar label {
   user-select: none;
 }
