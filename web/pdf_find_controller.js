@@ -27,6 +27,7 @@ const FindState = {
 const FIND_TIMEOUT = 250; // ms
 const MATCH_SCROLL_OFFSET_TOP = -50; // px
 const MATCH_SCROLL_OFFSET_LEFT = -400; // px
+const MATCHES = [];
 
 const CHARACTERS_TO_NORMALIZE = {
   "\u2018": "'", // Left single quotation mark
@@ -43,6 +44,9 @@ const CHARACTERS_TO_NORMALIZE = {
 };
 
 let normalizationRegex = null;
+/*function setMatches(matches) {
+  this.MATCHES = matches;
+}*/
 function normalize(text) {
   if (!normalizationRegex) {
     // Compile the regular expression for text normalization once.
@@ -354,6 +358,10 @@ class PDFFindController {
     const matches = [];
     const queryLen = query.length;
     const results = [];
+    const spot = {
+      top: MATCH_SCROLL_OFFSET_TOP,
+      left: MATCH_SCROLL_OFFSET_LEFT,
+    };
     let all_display = document.getElementsByClassName("find_all_display")[0];
     
     let matchIdx = -queryLen;
@@ -372,8 +380,13 @@ class PDFFindController {
       for(let i = 0; i < matches.length; i++){
         let elem = document.createElement("DIV");
         elem.classList.add("all_results_element");
-        elem.innerText = pageContent.substring(matches[i] - 10, matches[i] + 10);
-        elem.onclick = () => {console.log(elem.innerText)};
+        elem.innerHTML = "<div>" + pageContent.substring(matches[i] - 20, matches[i]) +
+                         "<div>" + pageContent.substring(matches[i], matches[i] + queryLen) + "</div>" +
+                         pageContent.substring(matches[i] + queryLen, matches[i] + queryLen + 20) + "</div>";
+        /*elem.onclick = () => {
+          console.log("Clicked")
+          scrollIntoView(elem, spot, false)
+        };*/
         all_display.appendChild(elem);
       }
     }

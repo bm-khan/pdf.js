@@ -213,6 +213,7 @@ class TextLayerBuilder {
       };
       result.push(match);
     }
+    //findController.setMatches(result);
     return result;
   }
 
